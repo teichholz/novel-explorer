@@ -2,13 +2,12 @@ package com.novel.novelexplorer;
 
 import com.novel.novelexplorer.entities.Novel;
 import com.novel.novelexplorer.repositories.NovelRepository;
+import com.novel.novelexplorer.sources.NovelSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @SpringBootApplication
 @Slf4j
@@ -22,27 +21,19 @@ public class NovelExplorerApplication {
 	public CommandLineRunner demo(NovelRepository repository) {
 		return (args) -> {
 			Novel novel = Novel.builder()
-					.title("COOOOOL")
-					.chapterCount(42)
-					.coverImage(null)
+					.title("Heaven above")
+					.rating(0.0)
+					.novelSource(NovelSource.RoyalRoad)
+					.chapterCount(100L)
 					.linkNovelChapters("")
 					.linkNovelOverview("")
-					.rating(5)
-					.releaseDate(null)
-					.viewsTotal(100)
-					.viewsLastMonth(1000)
 					.build();
 
-			// save a few customers
-			repository.save(novel);
+			Novel saved = repository.save(novel);
 
-			// fetch all customers
-			log.info("Customers found with findAll():");
-			log.info("-------------------------------");
-			for (Novel customer : repository.findAll()) {
-				log.info(customer.toString());
+			for (Novel novel1 : repository.findByNovelSource(NovelSource.RoyalRoad)) {
+				log.info(novel1.toString());
 			}
-			log.info("");
 		};
 	}
 }
