@@ -22,13 +22,4 @@ public class NovelExplorerApplication {
 		SpringApplication.run(NovelExplorerApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner demo2() {
-		return (args) -> {
-			final String url = "https://www.google.com";
-			UrlResource resource = new UrlResource(url);
-			Document parsed = Jsoup.parse(resource.getInputStream(), StandardCharsets.UTF_8.name(), url);
-			log.info(parsed.toString());
-		};
-	}
 }
